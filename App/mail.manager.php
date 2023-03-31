@@ -126,6 +126,7 @@ class DraftCreator
 
             }
             if ($name == null) {
+                print("Info DB: No se encontro coincidencia de nombre para el correo: ".$address."\n");
                 continue;
             }
 
@@ -187,14 +188,7 @@ class DraftCreator
             return null;
         }
     }
-    private function headersToString($headers)
-    {
-        $headerLines = array();
-        foreach ($headers as $name => $value) {
-            $headerLines[] = $name . ': ' . $value;
-        }
-        return implode("\r\n", $headerLines);
-    }
+    
 
     /**
      * Establece el correo electrónico identificado por $idCorreo como leído

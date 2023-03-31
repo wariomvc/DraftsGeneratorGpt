@@ -6,12 +6,14 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/openai.php';
 
 
+
 $gmail = new DraftCreator($config);
 $mails = $gmail->getInfoEmails();
 $openAIclient = new OpenAIClient($config);
 $respuestas = array();
 if(!empty($mails))
-foreach ($mails as $mail) {    
+foreach ($mails as $mail) { 
+    priint_r($mail);   
     $gpt_response = $openAIclient->create_response($mail['body']."\n".$mail['name']);
     if($gpt_response!=null){
       $gmail->createDraft($mail['address'], $gpt_response['choices'][0]['text']);
