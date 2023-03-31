@@ -5,9 +5,9 @@ class OpenAIClient{
     private $ApiKey;
     private $client;
     private $config;
-    public function __construct(String $key, Array $config ) {
+    public function __construct( Array $config ) {
         $this->config = $config;
-        $this->client = OpenAI::client($key);
+        $this->client = OpenAI::client($config['openai']['key']);
     }
 
     public function getModels(){
@@ -31,7 +31,10 @@ class OpenAIClient{
     'frequency_penalty'=>0.33,
     'presence_penalty'=>0.3,
     'stop'=>'Buen provecho'
-]);
+    ]);
+    if($response['choices'][0]['finish_reason']!="stop"){
+        return null;
+    }
       return $response;  
     }
 }

@@ -12,7 +12,9 @@
   "minimum-stability": "stable",
   "require": {
     "google/apiclient": "2.12.1",
-    "php": ">=7.0"
+    "php": ">=7.0",
+    "openai-php/client": "^0.4.1",
+    "guzzlehttp/guzzle": "^7.5"
   },
   "scripts": {
     "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
@@ -26,6 +28,11 @@
     "psr-4": {
       "Core\\": "Core/",
       "App\\": "App/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
     }
   }
 }
