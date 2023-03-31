@@ -1,0 +1,31 @@
+{
+  "name": "wariomvc/gpt-drafter",
+  "description": "Script conecta API GMAIL y ChatGPT",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "wariomvc",
+      "email": "wario.mvc@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "google/apiclient": "2.12.1",
+    "php": ">=7.0"
+  },
+  "scripts": {
+    "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
+  },
+  "extra": {
+    "google/apiclient-services": [
+      "Gmail"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "Core\\": "Core/",
+      "App\\": "App/"
+    }
+  }
+}

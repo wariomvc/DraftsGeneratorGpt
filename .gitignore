@@ -1,0 +1,5 @@
+vendor
+drafterApp
+.vscode
+token.json
+auth.json
