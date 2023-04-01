@@ -6,6 +6,7 @@ class OpenAIClient
     private $ApiKey;
     private $client;
     private $config;
+    private $logs='';
     public function __construct(array $config)
     {
         $this->config = $config;
@@ -36,17 +37,27 @@ class OpenAIClient
     {
         $response = $this->client->completions()->create([
             'model' => $this->config['openai']['model'],
-            'prompt' => $mensaje,
-            'max_tokens' => 104,
+            'prompt' =>  convertirHtmlToUtf8($mensaje),
+            'max_tokens' => 150,
             'temperature' => 0.1,
             'top_p' => 0.21,
             'frequency_penalty' => 0.33,
             'presence_penalty' => 0.3,
             'stop' => 'Buen provecho',
         ]);
-        if ($response['choices'][0]['finish_reason'] != "stop") {
+
+
+        //print_r( $response);
+        if ($response['choices'][0]['finish_reason'] == null) {
+            $this->logs .='Info OpenAI: Gpt terminó la respuesta por esta razón: '.$gpt_response['choices'][0]['text'];
+            print_r('Info OpenAI: Gpt terminó la respuesta por esta razón: ');
+            print_r($gpt_response['choices'][0]['text']);
             return null;
         }
+
         return $response;
+    }
+    public function get_logs(){
+        return $this->logs;
     }
 }

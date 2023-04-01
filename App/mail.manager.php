@@ -6,6 +6,7 @@ class DraftCreator
     private $service;
     private $emails;
     private $pdo;
+    private $logs='';
 
     public function __construct(array $config)
     {
@@ -38,11 +39,11 @@ class DraftCreator
 
     /**
 
-    * Crea un borrador de un correo electrónico en Gmail para un destinatario específico y un contenido dado.
-    * @param string $email Dirección de correo electrónico del destinatario.
-    * @param string $content Contenido del correo electrónico.
-    * @return void
-    */
+     * Crea un borrador de un correo electrónico en Gmail para un destinatario específico y un contenido dado.
+     * @param string $email Dirección de correo electrónico del destinatario.
+     * @param string $content Contenido del correo electrónico.
+     * @return void
+     */
 
     public function createDraft(String $email, String $content)
     {
@@ -126,7 +127,8 @@ class DraftCreator
 
             }
             if ($name == null) {
-                print("Info DB: No se encontro coincidencia de nombre para el correo: ".$address."\n");
+                $logs .= "Info DB: No se encontro coincidencia de nombre para el correo: " . $address . "\n";
+                // print("Info DB: No se encontro coincidencia de nombre para el correo: ".$address."\n");
                 continue;
             }
 
@@ -188,7 +190,6 @@ class DraftCreator
             return null;
         }
     }
-    
 
     /**
      * Establece el correo electrónico identificado por $idCorreo como leído
@@ -204,6 +205,9 @@ class DraftCreator
         $message->setRemoveLabelIds(['UNREAD']);
         $this->service->users_messages->modify('me', $idCorreo, $message);
 
+    }
+    public function get_logs(){
+        return $this->logs;
     }
 
 }
