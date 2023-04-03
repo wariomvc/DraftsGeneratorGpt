@@ -14,7 +14,7 @@
         "password": "zelda128"
     },
     "gmail": {
-        "refreshToken": "1\/\/0fwwX1z-b4eiuCgYIARAAGA8SNwF-L9IrNU7xPdynbmi74KqTWsSfTnwLduE8hQv5dhorchMRZdEpZD83bW4ipKouz2dllqjHHbE",
-        "authPath": "credenciales.json"
+        "refreshToken": "1\/\/0fC85FvBM0KEtCgYIARAAGA8SNwF-L9IroQmWuhRCgEpJJN8vOWTZCk51Jw9yBdkQpE3FKQWX4Kn-cOjCmTke3Ufqsezjt1FT5Fs",
+        "authPath": "..\/credenciales.json"
     }
 }

@@ -11,7 +11,8 @@ class DraftCreator
     public function __construct(array $config)
     {
         $this->gmailClient = new Google_Client();
-        $this->gmailClient->setAuthConfigFile($config['gmail']['authPath']);
+$this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']);
+
         $this->gmailClient->refreshToken($config['gmail']['refreshToken']);
         $this->service = new Google_Service_Gmail($this->gmailClient);
 

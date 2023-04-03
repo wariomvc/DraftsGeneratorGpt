@@ -51,3 +51,14 @@ function read_json_file($filename)
     // Devolver el arreglo
     return $array;
 }
+function write_json_file($filename, $array)
+{
+    // Codificar el arreglo en formato JSON
+    $json = json_encode($array, JSON_PRETTY_PRINT);
+
+    // Escribir el contenido en el archivo
+    file_put_contents($filename, $json);
+
+    // Devolver verdadero si se escribió el archivo correctamente
+    return true;
+}

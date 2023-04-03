@@ -1,5 +1,5 @@
 <?php
-$myfile = fopen("refresh.token", "r") or die("Unable to open file!");
+/* $myfile = fopen("refresh.token", "r") or die("Unable to open file!");
 $token = fgets($myfile);
 fclose($myfile);
 $config = array(
@@ -18,4 +18,4 @@ $config = array(
         "password"=>"zelda128"
     )
 	
-);
+); */

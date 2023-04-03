@@ -1,10 +1,14 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/utils.php';
+$app_config = read_json_file('./config/config.json');
+
 
     // Creamos una conexión con la clase Google_Client
     $client = new Google_Client();
 
-    $client->setAuthConfigFile('../credenciales.json');
+$client->setAuthConfigFile('./config/' . $app_config['gmail']['authPath']);
+
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
 
@@ -28,10 +32,26 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
         // Guardamos la clave refrescadora
         $codigo = $merengue['refresh_token'];
-        $myfile = fopen("refresh.token", "w");
-        fwrite($myfile,$codigo);
-        echo 'Se ha generado el token de recarga, puedes correr draftsApp';
-        return true;
+$app_config['gmail']['refreshToken'] = $codigo;
+write_json_file('./config/config.json', $app_config);
+//$myfile = fopen("refresh.token", "w");
+//fwrite($myfile,$codigo);
+//echo 'Se ha generado el token de recarga, puedes correr draftsApp';
+include './templates/header.php';
+?>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Se generó un nuevo <small>refresh token</small></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a class='btn btn-primary' href='./index.php'>Regresar al Inicio</a>
+        </div>
+    </div>
+</div>
+<?php
 
         // Lo normal es guardarla en una base de datos, pero ahora solo copiala para pegarla en el otro archivo.
     }

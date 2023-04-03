@@ -19,7 +19,7 @@
                 <li><a href="index.php" class="nav-link px-2 link-secondary">Inicio</a></li>
                 <li><a href="draftapp.php" class="nav-link px-2">Draft App</a></li>
                 <li><a href="auth.php" class="nav-link px-2">Authorización</a></li>
-                <li><a href="#" class="nav-link px-2">Ajustes</a></li>
+                <li><a href="setup.php" class="nav-link px-2">Ajustes</a></li>
             </ul>
         </header>
     </div>

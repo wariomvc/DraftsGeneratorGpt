@@ -2,15 +2,17 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/utils.php';
 require_once __DIR__ . '/mail.manager.php';
-require_once __DIR__ . '/config.php';
+
 require_once __DIR__ . '/openai.php';
 
 $app_config = read_json_file('./config/config.json');
 $t1 = time();
 $logs = '';
-$gmail = new DraftCreator($config);
+
+$gmail = new DraftCreator($app_config);
 $mails = $gmail->getInfoEmails();
-$openAIclient = new OpenAIClient($config);
+$openAIclient = new OpenAIClient($app_config);
+
 $number_drafts_created = 0;
 $number_draft_not_created = 0;
 $logs .= $gmail->get_logs();
@@ -18,7 +20,7 @@ $logs .= $gmail->get_logs();
 if (!empty($mails)) {
     foreach ($mails as $mail) {
 
-        /* $gpt_response = $openAIclient->create_response($mail['body'] . "\n" . $mail['name']);
+        $gpt_response = $openAIclient->create_response($mail['body'] . "\n" . $mail['name']);
     if ($gpt_response != null) {
     $gmail->createDraft($mail['address'], $gpt_response['choices'][0]['text']);
     $number_drafts_created += 1; //$gmail->setReadMail($mail['id']);
@@ -26,7 +28,7 @@ if (!empty($mails)) {
     //print("Exitoso: Se ha creado borrador para el email: " . $mail['address'] . "\n");
     } else {
     //print('Info openAI: No generó una respuesta para el email: ' . $mail['address'] . "\n");
-    } */
+    }
 
     }
 } else {

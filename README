@@ -1,0 +1,12 @@
+DraftApp es una aplicación escrita en PHP que genera respuestas a correos electronicos usando gpt.
+
+Requisitos:
+PHP 8.1+
+Composer
+
+Instalación:
+1. Descomprimir el archivo zip
+2. Instalar dependencias de composer - composer install
+
+Ejecutar desde PHP Server interno
+php -S localhost:8000 -t .\App\
