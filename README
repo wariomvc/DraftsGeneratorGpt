@@ -15,6 +15,7 @@ php -S localhost:8000 -t .\App\
 Ejecutar la versión de consola
 php-cgi.exe /App/draft_cli.php
 
+- config/config.json  - Contiene los parametros de configuración de la app
 
 
 Desarrollado por: w@rio wario.mvc@gmail.com
