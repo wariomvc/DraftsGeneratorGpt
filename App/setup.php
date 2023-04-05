@@ -2,13 +2,18 @@
 include './templates/header.php';
 require_once __DIR__ . '/utils.php';
 $app_config = read_json_file('./config/config.json');
-
-//print_r(empty($_POST));
+$log='';
 if (!empty($_POST)) {
     $app_config['draft_app']['reloadtime'] = $_POST['reloadtime'];
     $app_config['draft_app']['auto'] = boolval($_POST['auto']);
     $app_config['openai']['key'] = $_POST['key'];
     $app_config['openai']['model'] = $_POST['model'];
+    $app_config['openai']['max_tokens'] = $_POST['max_tokens'];
+    $app_config['openai']['temperature'] = $_POST['temperature'];
+    $app_config['openai']['top_p'] = $_POST['top_p'];
+    $app_config['openai']['frequency_penalty'] = $_POST['frequency_penalty'];
+    $app_config['openai']['presence_penalty'] = $_POST['presence_penalty'];
+    $app_config['openai']['stop'] = $_POST['stop'];
     $app_config['db']['username'] = $_POST['username'];
     $app_config['db']['password'] = $_POST['password'];
     $app_config['db']['dbname'] = $_POST['dbname'];
@@ -16,13 +21,14 @@ if (!empty($_POST)) {
     $app_config['gmail']['refreshToken'] = $_POST['refreshToken'];
     $app_config['gmail']['authPath'] = $_POST['authPath'];
     write_json_file('./config/config.json', $app_config);
-    echo 'Actualizado';
+    $log = 'Se Actualizó el archivo de configuración';
 }
 ?>
 <div class="container">
     <div class="row">
         <div class="col text-center">
             <h2>Ajustes de la App</h2>
+            <p><?php echo $log?></p>
         </div>
     </div>
     <div class="row">
@@ -35,7 +41,7 @@ if (!empty($_POST)) {
                 <div class="row">
                     <div class="col">
                         <label for="colFormLabelSm" class=" col-form-label col-form-label-sm">Tiempo para
-                            Recarga</label>
+                            Recarga en milisegundos</label>
                         <input type="text" class="form-control from-control-sm" name="reloadtime"
                             value="<?php echo $app_config['draft_app']['reloadtime'] ?>">
                     </div>
@@ -95,6 +101,46 @@ if (!empty($_POST)) {
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Modelo</label>
                             <input class="form-control" type="text" id="modelo" name="model"
                                 value="<?php echo $app_config['openai']['model'] ?>">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="colFormLabelSm" class="col-form-label col-form-label-sm">Max
+                                Tokens</label>
+                            <input type="text" class="form-control from-control-sm" name="max_tokens"
+                                value="<?php echo $app_config['openai']['max_tokens'] ?>">
+                        </div>
+                        <div class="col">
+                            <label for="colFormLabelSm" class=" col-form-label col-form-label-sm">Temperature</label>
+                            <input class="form-control" type="text" id="temperature" name="temperature"
+                                value="<?php echo $app_config['openai']['temperature'] ?>">
+
+                        </div>
+                        <div class="col">
+                            <label for="colFormLabelSm" class="col-form-label col-form-label-sm">Top P</label>
+                            <input class="form-control" type="text" id="top_p" name="top_p"
+                                value="<?php echo $app_config['openai']['top_p'] ?>">
+
+                        </div>
+                        <div class="col">
+                            <label for="colFormLabelSm" class="col-form-label col-form-label-sm">Frencuency
+                                Penalty</label>
+                            <input class="form-control" type="text" id="frecuency_penalty" name="frequency_penalty"
+                                value="<?php echo $app_config['openai']['frequency_penalty'] ?>">
+
+                        </div>
+                        <div class="col">
+                            <label for="colFormLabelSm" class="col-form-label col-form-label-sm">Presence
+                                Penalty</label>
+                            <input class="form-control" type="text" id="presence_penalty" name="presence_penalty"
+                                value="<?php echo $app_config['openai']['presence_penalty'] ?>">
+
+                        </div>
+                        <div class="col">
+                            <label for="colFormLabelSm" class="col-form-label col-form-label-sm">Stop</label>
+                            <input class="form-control" type="text" id="stop" name="stop"
+                                value="<?php echo $app_config['openai']['stop'] ?>">
 
                         </div>
                     </div>

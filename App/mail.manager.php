@@ -6,12 +6,12 @@ class DraftCreator
     private $service;
     private $emails;
     private $pdo;
-    private $logs='';
+    private $logs = '';
 
     public function __construct(array $config)
     {
         $this->gmailClient = new Google_Client();
-$this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']);
+        $this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']);
 
         $this->gmailClient->refreshToken($config['gmail']['refreshToken']);
         $this->service = new Google_Service_Gmail($this->gmailClient);
@@ -46,7 +46,7 @@ $this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']
      * @return void
      */
 
-    public function createDraft(String $email, String $content)
+    public function createDraft(String $email, String $content, String $message_id, String $subject)
     {
         $message = new Google_Service_Gmail_Message();
         $body = new Google_Service_Gmail_MessagePart();
@@ -60,15 +60,16 @@ $this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']
         $body->setBody($data);
 
         $headers = "To: " . $email . "\n";
-        $headers .= "Subject: " . mb_encode_mimeheader("Respuesta", 'utf-8') . "\n";
+        $headers .= "Subject: RE: " . mb_encode_mimeheader($subject, 'utf-8') . "\n";
         $headers .= "\n";
         $bodyText = <<<EOF
         $content
         EOF;
-        $headers .= $bodyText;
+        $headers .=$bodyText;
 
         $message->setRaw(rtrim(strtr(base64_encode($headers), '+/', '-_'), '='));
-        $message->setPayload($body);
+        $message->setThreadId($message_id);
+        //$message->setPayload($body);
 
         // crea el borrador con el mensaje y el encabezado
         $draft = new Google_Service_Gmail_Draft();
@@ -99,9 +100,12 @@ $this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']
             $id = $message->getId();
             $message = $this->service->users_messages->get('me', $id, ['format' => 'full']);
             $headers = $message->getPayload()->getHeaders();
+            
+            
             $body = $message->getPayload()->getBody();
             $parts = $message->getPayload()->getParts();
             $labels = $message->getLabelIds();
+            $message_id= $message->getThreadId();
 
             $from = '';
             $subject = '';
@@ -112,6 +116,11 @@ $this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']
 
             // Obtener el remitente y el asunto
             foreach ($headers as $header) {
+                /* echo '<pre>';
+
+                print_r($header);
+                echo '</pre>'; */
+
 
                 if ($header->getName() == 'From') {
                     $from = $header->getValue();
@@ -125,7 +134,7 @@ $this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']
                     $name = $this->get_name_by_email($address);
 
                 }
-
+                
             }
             if ($name == null) {
                 $logs .= "Info DB: No se encontro coincidencia de nombre para el correo: " . $address . "\n";
@@ -146,7 +155,7 @@ $this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']
 
             // Agregar el mensaje al arreglo de mensajes
 
-            $emails[] = array('id' => $id, 'from' => $from, 'subject' => $subject, 'body' => $message_body, 'address' => $address, 'name' => $name);
+            $emails[] = array('id' => $id, 'from' => $from, 'subject' => $subject, 'body' => $message_body, 'address' => $address, 'name' => $name, 'message_id'=>$message_id);
         }
         $this->emails = $emails;
         return $emails;
@@ -207,7 +216,8 @@ $this->gmailClient->setAuthConfigFile('./config/' . $config['gmail']['authPath']
         $this->service->users_messages->modify('me', $idCorreo, $message);
 
     }
-    public function get_logs(){
+    public function get_logs()
+    {
         return $this->logs;
     }
 

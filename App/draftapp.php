@@ -1,4 +1,11 @@
 <?php
+/**
+ * drafapp.php interfaz de usuario para la generación de los borradores usando gpt
+ * Lee los emails de la cuenta de gmail y genera una respuesta para cada uno de ellos.
+ * Despues muestra en pantalla el resultado de la ejeción con la opción de que se vuelva
+ * a realizar el proceso automaticamente a intervalos regulares de tiempo.
+ */
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/utils.php';
 require_once __DIR__ . '/mail.manager.php';
@@ -22,7 +29,8 @@ if (!empty($mails)) {
 
         $gpt_response = $openAIclient->create_response($mail['body'] . "\n" . $mail['name']);
     if ($gpt_response != null) {
-    $gmail->createDraft($mail['address'], $gpt_response['choices'][0]['text']);
+$gmail->createDraft($mail['address'], $gpt_response['choices'][0]['text'], $mail['message_id'], $mail['subject']);
+
     $number_drafts_created += 1; //$gmail->setReadMail($mail['id']);
     $logs .= "Exitoso: Se ha creado borrador para el email: " . $mail['address'] . "\n";
     //print("Exitoso: Se ha creado borrador para el email: " . $mail['address'] . "\n");

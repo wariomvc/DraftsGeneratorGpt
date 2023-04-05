@@ -8,5 +8,13 @@ Instalación:
 1. Descomprimir el archivo zip
 2. Instalar dependencias de composer - composer install
 
-Ejecutar desde PHP Server interno
+Ejecutar la versión web el PHP Server interno
 php -S localhost:8000 -t .\App\
+- Abrir en el navegador localhost:8000
+
+Ejecutar la versión de consola
+php-cgi.exe /App/draft_cli.php
+
+
+
+Desarrollado por: w@rio wario.mvc@gmail.com

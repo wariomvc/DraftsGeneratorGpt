@@ -1,20 +1,26 @@
 {
-    "draft_app": {
-        "reloadtime": "5000",
-        "auto": true
-    },
-    "openai": {
-        "key": "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",
-        "model": "davinci:ft-personal-2023-03-31-00-18-02"
-    },
-    "db": {
-        "dbname": "draftsapp",
-        "table": "tickets",
-        "username": "root",
-        "password": "zelda128"
-    },
-    "gmail": {
-        "refreshToken": "1\/\/0fwwX1z-b4eiuCgYIARAAGA8SNwF-L9IrNU7xPdynbmi74KqTWsSfTnwLduE8hQv5dhorchMRZdEpZD83bW4ipKouz2dllqjHHbE",
-        "authPath": "credenciales.json"
-    }
+  "draft_app": {
+    "reloadtime": "5000",
+    "auto": true
+  },
+  "openai": {
+    "key": "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",
+    "model": "davinci:ft-personal-2023-03-31-00-18-02",
+    "max_tokens": 150,
+    "temperature": 0.1,
+    "top_p": 0.21,
+    "frequency_penalty": 0.33,
+    "presence_penalty": 0.3,
+    "stop": "Buen provecho"
+  },
+  "db": {
+    "dbname": "draftsapp",
+    "table": "tickets",
+    "username": "root",
+    "password": "zelda128"
+  },
+  "gmail": {
+    "refreshToken": "1//0fhKGqFnC_JeGCgYIARAAGA8SNwF-L9Irlz5Wk25MRvDeDDb5EuEj44GmydkzTLdWKK4OXU2cyX23JbIv6pKLetXFc_mGLGlY96I",
+    "authPath": "credenciales.json"
+  }
 }

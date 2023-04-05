@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/config.php';
+
 class OpenAIClient
 {
     private $ApiKey;
@@ -38,12 +38,12 @@ class OpenAIClient
         $response = $this->client->completions()->create([
             'model' => $this->config['openai']['model'],
             'prompt' =>  convertirHtmlToUtf8($mensaje),
-            'max_tokens' => 150,
-            'temperature' => 0.1,
-            'top_p' => 0.21,
-            'frequency_penalty' => 0.33,
-            'presence_penalty' => 0.3,
-            'stop' => 'Buen provecho',
+            'max_tokens' => $this->config['openai']['max_tokens'],
+            'temperature' => $this->config['openai']['temperature'],
+            'top_p' => $this->config['openai']['top_p'],
+            'frequency_penalty' => $this->config['openai']['frequency_penalty'],
+            'presence_penalty' => $this->config['openai']['presence_penalty'],
+            'stop' => $this->config['openai']['stop'],
         ]);
 
 
