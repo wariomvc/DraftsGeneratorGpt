@@ -93,6 +93,7 @@ class DraftCreator
      */
     public function getInfoEmails()
     {
+        
         $results = $this->service->users_messages->listUsersMessages('me', ['q' => 'in:inbox']);
         $messages = $results->getMessages();
         $emails = array();
@@ -116,10 +117,7 @@ class DraftCreator
 
             // Obtener el remitente y el asunto
             foreach ($headers as $header) {
-                /* echo '<pre>';
-
-                print_r($header);
-                echo '</pre>'; */
+                
 
 
                 if ($header->getName() == 'From') {
@@ -129,7 +127,7 @@ class DraftCreator
                     $subject = $header->getValue();
                 }
                 if ($header->getName() == 'ARC-Authentication-Results') {
-                    //$address = $header->getValue();
+
                     $address = $this->extract_email($header->value);
                     $name = $this->get_name_by_email($address);
 
@@ -137,8 +135,7 @@ class DraftCreator
                 
             }
             if ($name == null) {
-                $logs .= "Info DB: No se encontro coincidencia de nombre para el correo: " . $address . "\n";
-                // print("Info DB: No se encontro coincidencia de nombre para el correo: ".$address."\n");
+                $this->logs .= "Info DB: No se encontro coincidencia de nombre para el correo: " . $address . "\n";
                 continue;
             }
 
