@@ -32,15 +32,17 @@ if (!empty($mails)) {
         if ($gpt_response != null) {
             $gmail->createDraft($mail['address'], $gpt_response['choices'][0]['text'], $mail['message_id'], $mail['subject']);
             $number_drafts_created += 1; //$gmail->setReadMail($mail['id']);
-            $logs .= "Exitoso: Se ha creado borrador para el email: " . $mail['address'] . "\n";
-            print("Exitoso: Se ha creado borrador para el email: " . $mail['address'] . "\n");
+$logs .= "Exitoso: Se ha creado borrador para el email: " . $mail['address'] . " - " . $mail['subject'] . "\n";
+
         } else {
-            print('Info openAI: No generó una respuesta para el email: ' . $mail['address'] . "\n");
+$logs .= "Info openAI: No generó una respuesta para el email: " . $mail['address'] . " - " . $mail['subject'] . "\n";
+
         }
 
     }
 } else {
-    print('Info Gmail: No hay emails sin Leer');
+$logs .= 'Info Gmail: No hay emails sin Leer';
+
 }
 $logs .= $openAIclient->get_logs();
-$t2 = time();
+print($logs);

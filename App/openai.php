@@ -6,7 +6,7 @@ class OpenAIClient
     private $ApiKey;
     private $client;
     private $config;
-    private $logs='';
+    private $logs = '';
     public function __construct(array $config)
     {
         $this->config = $config;
@@ -35,29 +35,33 @@ class OpenAIClient
 
     public function create_response(String $mensaje)
     {
-        $response = $this->client->completions()->create([
-            'model' => $this->config['openai']['model'],
-            'prompt' =>  convertirHtmlToUtf8($mensaje),
-            'max_tokens' => $this->config['openai']['max_tokens'],
-            'temperature' => $this->config['openai']['temperature'],
-            'top_p' => $this->config['openai']['top_p'],
-            'frequency_penalty' => $this->config['openai']['frequency_penalty'],
-            'presence_penalty' => $this->config['openai']['presence_penalty'],
-            'stop' => $this->config['openai']['stop'],
-        ]);
+        try {
+            $gpt_response = $this->client->completions()->create([
+                'model' => $this->config['openai']['model'],
+                'prompt' => convertirHtmlToUtf8($mensaje),
+                'max_tokens' => $this->config['openai']['max_tokens'],
+                'temperature' => $this->config['openai']['temperature'],
+                'top_p' => $this->config['openai']['top_p'],
+                'frequency_penalty' => $this->config['openai']['frequency_penalty'],
+                'presence_penalty' => $this->config['openai']['presence_penalty'],
+                'stop' => $this->config['openai']['stop'],
+            ]);
 
-
-        //print_r( $response);
-        if ($response['choices'][0]['finish_reason'] == null) {
-            $this->logs .='Info OpenAI: Gpt terminó la respuesta por esta razón: '.$gpt_response['choices'][0]['text'];
-            print_r('Info OpenAI: Gpt terminó la respuesta por esta razón: ');
-            print_r($gpt_response['choices'][0]['text']);
-            return null;
+        } catch (\Throwable$th) {
+            print_r('Error');
+            $this->logs .= $th;
+            return;
         }
 
-        return $response;
+        if (($gpt_response['choices'][0]['finish_reason'] != 'stop')&&($gpt_response['choices'][0]['finish_reason'] != '') ) {
+        $this->logs .= 'Info OpenAI: Gpt terminó la respuesta por esta razón: ' . $gpt_response['choices'][0]['finish_reason'];
+        return null;
+        }
+
+        return $gpt_response;
     }
-    public function get_logs(){
+    public function get_logs()
+    {
         return $this->logs;
     }
 }
