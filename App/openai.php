@@ -39,11 +39,11 @@ class OpenAIClient
             $gpt_response = $this->client->completions()->create([
                 'model' => $this->config['openai']['model'],
                 'prompt' => convertirHtmlToUtf8($mensaje),
-                'max_tokens' => $this->config['openai']['max_tokens'],
-                'temperature' => $this->config['openai']['temperature'],
-                'top_p' => $this->config['openai']['top_p'],
-                'frequency_penalty' => $this->config['openai']['frequency_penalty'],
-                'presence_penalty' => $this->config['openai']['presence_penalty'],
+                'max_tokens' => intval($this->config['openai']['max_tokens']),
+                'temperature' => floatval($this->config['openai']['temperature']),
+                'top_p' => floatval($this->config['openai']['top_p']),
+                'frequency_penalty' => floatval($this->config['openai']['frequency_penalty']),
+                'presence_penalty' => floatval($this->config['openai']['presence_penalty']),
                 'stop' => $this->config['openai']['stop'],
             ]);
 
