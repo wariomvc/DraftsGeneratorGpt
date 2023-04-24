@@ -36,19 +36,13 @@ function updateButtonEvent() {
 }
 function auto_reload() {
   let updateCheckInput = document.querySelector('#updateCheck');
-  console.log('UpdateChecked: ', updateCheckInput.checked);
-  console.log('IntervalID:', intervalId);
   if (!updateCheckInput.checked) return;
-  console.log('Runinig:', running);
   if (running) return;
   running = true;
-  console.log('Runnnign:', running);
   let refresh_time = parseInt(document.querySelector('#refresh').value);
-  if (refresh_time < 20000) refresh_time = 20000;
+  if (refresh_time < 20000) refresh_time = 20000; //Ajusta el tiempo de refresco para que no sea menor a 20 segundos
 
   intervalId = setInterval(() => {
     window.location.reload();
-    console.log('Refrescando:', intervalId);
   }, refresh_time);
-  console.log('Seting: Intervalo:', intervalId);
 }
