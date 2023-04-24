@@ -122,20 +122,24 @@ class DraftCreator
 
                 if ($header->getName() == 'From') {
                     $from = $header->getValue();
+                    $address = $this->extract_email($from);
+                    $name = $this->get_name_by_email($address);
+
                 }
                 if ($header->getName() == 'Subject') {
                     $subject = $header->getValue();
                 }
                 if ($header->getName() == 'ARC-Authentication-Results') {
-
+                    
                     $address = $this->extract_email($header->value);
-                    $name = $this->get_name_by_email($address);
+                   // $name = $this->get_name_by_email($address);
 
                 }
                 
             }
             if ($name == null) {
-                $this->logs .= "Info DB: No se encontro coincidencia de nombre para el correo: " . $address . "\n";
+$this->logs .= "Info DB: No se encontro coincidencia de nombre para el correo: " . $address . ":" . $name . "\n";
+
                 continue;
             }
 
@@ -169,6 +173,7 @@ class DraftCreator
     {
         preg_match('/[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}/', $text, $matches); // Buscar el patrón de correo electrónico
         if (!empty($matches)) {
+            $this->logs.=$matches[0];
             return $matches[0]; // Devolver el primer resultado encontrado
         } else {
             return null; // Si no se encuentra ningún correo electrónico, devolver null
