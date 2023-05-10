@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class OpenAIClient
@@ -48,7 +50,7 @@ class OpenAIClient
             ]);
 
         } catch (\Throwable$th) {
-            print_r('Error');
+            
             $this->logs .= $th;
             return;
         }

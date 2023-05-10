@@ -1,4 +1,8 @@
-<?php include './templates/header.php';?>
+<?php 
+header('Content-Type: text/html; charset=utf-8');
+
+include './templates/header.php';
+?>
 
 <div class="container">
     <div class="row">
@@ -43,7 +47,7 @@
             <p>
                 En <strong>Ajustes </strong> tendrás las opciones disponibles para personalizar la ejecución del script.
             </p>
-            <a href="ajustes-php" class="icon-link">
+            <a href="setup.php" class="icon-link">
                 Ajustes
                 <svg class="bi">
                     <use xlink:href="#chevron-right"></use>

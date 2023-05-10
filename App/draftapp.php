@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
+
 /**
  * drafapp.php interfaz de usuario para la generación de los borradores usando gpt
  * Lee los emails de la cuenta de gmail y genera una respuesta para cada uno de ellos.
@@ -29,7 +31,9 @@ if (!empty($mails)) {
 
         $gpt_response = $openAIclient->create_response($mail['body'] . "\n" . $mail['name']);
         if ($gpt_response != null) {
-            $gmail->createDraft($mail['address'], $gpt_response['choices'][0]['text'], $mail['message_id'], $mail['subject']);
+            $cadena = $gpt_response['choices'][0]['text'];
+
+            $gmail->createDraft($mail['address'], mb_convert_encoding($cadena,'UTF-8',mb_detect_encoding($cadena)), $mail['message_id'], $mail['subject']);
 
             $number_drafts_created += 1; //$gmail->setReadMail($mail['id']);
             $logs .= "Gmail Info: Se ha creado borrador para el email: " . $mail['address'] . " - ".$mail['subject']."\n";

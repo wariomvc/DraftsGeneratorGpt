@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
+
 require_once __DIR__ . '/../vendor/autoload.php';
 class DraftCreator
 {
@@ -138,7 +140,7 @@ class DraftCreator
                 
             }
             if ($name == null) {
-$this->logs .= "Info DB: No se encontro coincidencia de nombre para el correo: " . $address . ":" . $name . "\n";
+                $this->logs .= "Info DB: No se encontro coincidencia de nombre para el correo: " . $address . ":" . $name . "\n";
 
                 continue;
             }
@@ -173,7 +175,7 @@ $this->logs .= "Info DB: No se encontro coincidencia de nombre para el correo: "
     {
         preg_match('/[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}/', $text, $matches); // Buscar el patrón de correo electrónico
         if (!empty($matches)) {
-            $this->logs.=$matches[0];
+            //$this->logs.=$matches[0];
             return $matches[0]; // Devolver el primer resultado encontrado
         } else {
             return null; // Si no se encuentra ningún correo electrónico, devolver null
